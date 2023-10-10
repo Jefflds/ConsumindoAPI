@@ -4,22 +4,26 @@ import { blogFetch } from "../axios/config";
 import { useState } from "react";
 
 export const NewPost = () => {
-
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
 
   const cretePost = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const post = {
-      title,
-      body,
-      userId: 1,
-    };
+    try {
+      const post = {
+        title,
+        body,
+        userId: 1,
+      };
 
-    await blogFetch.post("/posts", {
-      body: post,
-    });
+      await blogFetch.post("/posts", {
+        body: post,
+      });
+      console.log("Criado com Sucesso")
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className="new-post">
@@ -46,7 +50,9 @@ export const NewPost = () => {
             }}
           ></textarea>
         </div>
-        <button type="submit" className="btn">Criar Post</button>
+        <button type="submit" className="btn">
+          Criar Post
+        </button>
       </form>
     </div>
   );
